@@ -10,46 +10,50 @@ const Accion = styled.img`
   margin-left: 0.5rem;
   margin-top: auto;
 `;
+const Informacion = styled.div`
+  display: grid;
+  grid-template-columns: 45% 20% 30%;
+  margin-left: 1.5rem;
+`;
 
-const Panel = () => {
+const Calificaciones = () => {
   /* State local de administradores */
-  const alumnos = [
+  const materias = [
     {
-      nombre: "Sergio",
-      paterno: "Guadarrama",
-      materno: "Santillán",
+      nombre: "Materia #1",
       id: 1,
-      correo: "correo4@correo.com.mx",
       semestre: "2",
-      estatus: false,
-      cuenta: "123",
+      clave: "123",
+      creditos: "2",
+      opcion: "obligatoria",
+      calificacion: "10",
     },
     {
-      nombre: "Emily",
-      paterno: "Guadarrama",
-      materno: "Payan",
+      nombre: "Materia #2",
       id: 2,
-      correo: "correo3@correo.com.mx",
       semestre: "3",
-      cuenta: "123",
+      clave: "52",
+      creditos: "3",
+      opcion: "opcional",
+      calificacion: "10",
     },
     {
-      nombre: "Angelica",
-      paterno: "Hernandez",
-      materno: "Muñiz",
+      nombre: "Materia #3",
       id: 3,
-      correo: "correo2@correo.com.mx",
       semestre: "1",
-      cuenta: "123",
+      clave: "43",
+      creditos: "4",
+      opcion: "opcional",
+      calificacion: "10",
     },
     {
-      nombre: "Brandon",
-      paterno: "Alcantara",
-      materno: "Ruiz",
+      nombre: "Materia #4",
       id: 4,
-      correo: "correo1@correo.com.mx",
       semestre: "5",
-      cuenta: "123",
+      clave: "543",
+      creditos: "1",
+      opcion: "obligatoria",
+      calificacion: "10",
     },
   ];
 
@@ -70,34 +74,36 @@ const Panel = () => {
     <Layout>
       <Contenedor>
         {/* <h1>Bienvenido(a): Sergio</h1> */}
-        <h1>Alumnos</h1>
+        <h1>Calificaciones</h1>
+        <Informacion>
+          <p>Nombre:</p>
+          <p>Promedio:</p>
+          <p>Total de Creditos (%):</p>
+        </Informacion>
         <Tabla>
           <thead>
             <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Paterno</th>
-              <th scope="col">Materno</th>
-              <th scope="col">Correo</th>
+              <th scope="col">Materia</th>
               <th scope="col">Semestre</th>
-              <th scope="col">Cuenta</th>
+              <th scope="col">Creditos</th>
+              <th scope="col">Opción</th>
+              <th scope="col">Calificación</th>
+              <th scope="col">Clave</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {/* Iteracion por cada admin */}
-            {alumnos.map((alumno) => (
-              <tr key={alumno.id}>
-                <td scope="col">{alumno.nombre}</td>
-                <td scope="col">{alumno.paterno}</td>
-                <td scope="col">{alumno.materno}</td>
-                <td scope="col">{alumno.correo.slice(0, 7)}...</td>
-                <td scope="col">{alumno.semestre}</td>
-                <td scope="col">{alumno.cuenta}</td>
+            {materias.map((materia) => (
+              <tr key={materia.id}>
+                <td scope="col">{materia.nombre}</td>
+                <td scope="col">{materia.semestre}</td>
+                <td scope="col">{materia.creditos}</td>
+                <td scope="col">{materia.opcion}</td>
+                <td scope="col">{materia.calificacion}</td>
+                <td scope="col">{materia.clave}</td>
                 <td scope="col">
-                  {/* Status */}
-                  <button onClick={() => cambiarEstatus(alumno.id)}>
-                    {alumno.estatus ? "Activo" : "Inactivo"}
-                  </button>
+                  {/* Acciones */}
                   <Accion alt="" src={Edit} onClick={() => editarAlumno()} />
                   <Accion
                     alt=""
@@ -115,4 +121,4 @@ const Panel = () => {
   );
 };
 
-export default Panel;
+export default Calificaciones;

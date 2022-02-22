@@ -50,9 +50,6 @@ const Sidebar = () => {
         <Enlace to="/panel/nuevo-admin">
           <p>Nuevo Admin</p>
         </Enlace>
-        <Enlace to="/panel/privilegios">
-          <p>Privilegios</p>
-        </Enlace>
       </div>
       <div>
         <h2>Escuela</h2>
@@ -75,7 +72,7 @@ const Sidebar = () => {
           <p>Nuevo Alumno</p>
         </Enlace>
       </div>
-      <Enlace to="/">
+      <Enlace to="/calificaciones">
         <h2>Calificaciones</h2>
       </Enlace>
     </ContenidoSidebar>
