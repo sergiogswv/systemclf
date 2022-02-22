@@ -39,6 +39,11 @@ const TablaStl = styled.table`
     border: none;
     font-size: 1rem;
   }
+  @media (max-width: 768px) {
+    display: block;
+    overflow-y: scroll;
+    height: 100vh;
+  }
 `;
 
 export const Tabla = ({ children }) => {

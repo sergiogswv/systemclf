@@ -45,6 +45,9 @@ const BotonInput = styled.input`
   font-size: 1.5rem;
   font-weight: 400;
   margin-left: 65%;
+  @media (max-width: 768px) {
+    margin-left: 40%;
+  }
 `;
 
 export const Boton = ({ value }) => {

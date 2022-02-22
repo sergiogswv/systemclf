@@ -21,12 +21,16 @@ const ContenidoSidebar = styled.div`
     font-size: 0.75rem;
     line-height: 1;
     height: 30%;
+    width: 100%;
+
     h2 {
       margin: 0.5rem 0.5rem;
     }
     p {
       text-align: center;
       margin: 0.5rem 0.5rem;
+      text-align: left;
+      padding-top: 0.5rem;
     }
   }
 `;
@@ -80,4 +84,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-9912200005949;

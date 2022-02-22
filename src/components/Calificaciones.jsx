@@ -14,6 +14,9 @@ const Informacion = styled.div`
   display: grid;
   grid-template-columns: 45% 20% 30%;
   margin-left: 1.5rem;
+  @media (max-width: 768px) {
+    display: block;
+  }
 `;
 
 const Calificaciones = () => {
