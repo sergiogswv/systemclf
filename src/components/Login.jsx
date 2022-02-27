@@ -1,15 +1,19 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from "../actions/loginActions";
+import { useState } from "react";
+import Error from "./Layout/Error";
 
 const ContenedorLogin = styled.div`
   background-color: var(--primary);
   border-radius: 50px;
   width: 90%;
-  height: 17.5rem;
+  //height: 30%;
   margin: 20% auto;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.35);
   text-align: center;
+  padding-bottom: 1rem;
 
   @media (min-width: 768px) {
     width: 50%;
@@ -65,18 +69,52 @@ const Boton = styled.input`
   text-decoration: none;
 `;
 
-const Login = () => {
+const Login = (e) => {
+  const [usuario, setUsuario] = useState({
+    correo: "",
+    password: "",
+  });
+
+  /* Acceder al state de error */
+  const error = useSelector((state) => state.login.error);
+
+  /* Extraer de usuario */
+  const { correo, password } = usuario;
+
+  /* setear en local state */
+  const onChange = (e) => {
+    setUsuario({
+      ...usuario,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const dispatch = useDispatch();
+
+  const iniciarSesion = (e) => {
+    e.preventDefault();
+
+    dispatch(loginAction());
+  };
+
   return (
     <Layout>
       <ContenedorLogin>
         {/* Login */}
         <Titulo>Iniciar Sesión</Titulo>
         {/* Formulario */}
-        <Formulario>
+        <Formulario onSubmit={iniciarSesion}>
           {/* Campo de Correo */}
           <Campo>
             <label htmlFor="correo">Correo:</label>
-            <input type="text" placeholder="Email" name="correo" id="correo" />
+            <input
+              type="text"
+              placeholder="Email"
+              name="correo"
+              id="correo"
+              onChange={onChange}
+              value={correo}
+            />
           </Campo>
           {/* Campo de contraseña */}
           <Campo>
@@ -86,12 +124,13 @@ const Login = () => {
               placeholder="Password"
               name="password"
               id="password"
+              onChange={onChange}
+              value={password}
             />
           </Campo>
           {/* boton de Enviar */}
-          <Link to={"/panel"}>
-            <Boton type="submit" value="Enviar" />
-          </Link>
+          {error && <Error errorMsg={"Todos los campos son obligatorios"} />}
+          <Boton type="submit" value="Enviar" />
         </Formulario>
       </ContenedorLogin>
     </Layout>

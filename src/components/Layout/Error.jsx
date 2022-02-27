@@ -12,10 +12,10 @@ const ErrorStyle = styled.div`
   }
 `;
 
-const Error = () => {
+const Error = ({ errorMsg }) => {
   return (
     <ErrorStyle>
-      <p>Todos los campos son obligatorios</p>
+      <p>{errorMsg}</p>
     </ErrorStyle>
   );
 };

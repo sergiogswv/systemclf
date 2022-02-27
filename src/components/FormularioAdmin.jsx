@@ -10,6 +10,12 @@ import Error from "./Layout/Error";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+/* Redux */
+import { useDispatch, useSelector } from "react-redux";
+
+/* Actions */
+import { agregarAdmin } from "../actions/adminActions";
+
 /* Estilos de formulario */
 const Formulario = styled.form`
   display: block;
@@ -22,9 +28,15 @@ const Campo = styled.input`
 `;
 
 const FormularioAdmin = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   /* Estate de Error */
   const [error, setError] = useState(false);
+  const errorMsg = useSelector((state) => state.admins.msg);
+  const errorReducer = useSelector((state) => state.admins.error);
+  console.log(errorReducer);
+
   /* state local */
   const [admin, setAdmin] = useState({
     nombre: "",
@@ -44,20 +56,26 @@ const FormularioAdmin = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const agregarAdminSubmit = (admin) => dispatch(agregarAdmin(admin));
+
   /* Agrega el profesor en el state */
   const handleSubmit = (e) => {
     e.preventDefault();
     /* Valida que nada este vacio */
     if ([nombre, paterno, materno, correo, privilegios].includes("")) {
       setError(true);
-
       return null;
     }
-    setError(false);
-    /* Agregar el profesor */
 
+    /* Agregar el profesor */
+    agregarAdminSubmit(admin);
+
+    setError(false);
     /* Redireccionar */
-    navigate("/panel");
+    setTimeout(() => {
+      navigate("/panel");
+    }, 3000);
   };
   return (
     <Layout>
@@ -116,7 +134,8 @@ const FormularioAdmin = () => {
             </select>
           </CampoForm>
           {/* Error */}
-          {error && <Error />}
+          {error && <Error errorMsg={"Todos los campos son obligatorios"} />}
+          {errorReducer && <Error errorMsg={errorMsg} />}
           {/* Boton de agregar */}
           <Boton value="Agregar">
             <input type="Submit" />

@@ -1,0 +1,48 @@
+{
+  "admins": [
+    {
+      "nombre": "Sergio",
+      "paterno": "Guadarrama",
+      "materno": "Santillan",
+      "id": 1,
+      "categoria": "1000",
+      "privilegios": "RW",
+      "estatus": true
+    },
+    {
+      "nombre": "Emily",
+      "paterno": "Guadarrama",
+      "materno": "Payan",
+      "id": 2,
+      "categoria": "1000",
+      "privilegios": "RW",
+      "estatus": true
+    },
+    {
+      "nombre": "Angelica",
+      "paterno": "Hernandez",
+      "materno": "Muñiz",
+      "id": 3,
+      "categoria": "1000",
+      "privilegios": "R",
+      "estatus": true
+    },
+    {
+      "nombre": "Brandon",
+      "paterno": "Alcantara",
+      "materno": "Ruiz",
+      "id": 4,
+      "categoria": "1000",
+      "privilegios": "RW",
+      "estatus": false
+    },
+    {
+      "nombre": "Violeta",
+      "paterno": "Guadarrama",
+      "materno": "Payan",
+      "correo": "correo2@correo.com",
+      "privilegios": "R",
+      "id": 5
+    }
+  ]
+}

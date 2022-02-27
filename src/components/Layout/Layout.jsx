@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import Fondo from "./Fondo";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const Layout = ({ children }) => {
-  const [menu, setMenu] = useState(false);
-  //console.log(menu);
+  const menu = useSelector((state) => state.menu.mostrar);
+
   return (
     <>
-      <Header menu={menu} setMenu={setMenu} />
+      <Header />
       <Fondo />
       {menu && <Sidebar />}
 

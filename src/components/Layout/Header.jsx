@@ -1,6 +1,11 @@
 import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
 import Logo from "../img/Logo.png";
 import SignIn from "../img/sign-in.png";
+import {
+  mostrarMenuAction,
+  ocultarMenuAction,
+} from "../../actions/menuActions";
 
 const Navegacion = styled.nav`
   display: grid;
@@ -21,12 +26,24 @@ const LogoImg = styled.img`
   cursor: pointer;
 `;
 
-const Header = ({ menu, setMenu }) => {
+const Header = () => {
+  const dispatch = useDispatch();
+
+  const menu = useSelector((state) => state.menu.mostrar);
+
+  const verMenu = () => {
+    if (menu) {
+      dispatch(ocultarMenuAction());
+    } else {
+      dispatch(mostrarMenuAction());
+    }
+  };
+
   return (
     <header>
       <Navegacion>
         <div>
-          <LogoImg src={Logo} alt="Logo" onClick={() => setMenu(!menu)} />
+          <LogoImg src={Logo} alt="Logo" onClick={() => verMenu()} />
         </div>
         <div>
           <Imagen src={SignIn} alt="Logo" />
