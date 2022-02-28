@@ -1,7 +1,9 @@
-import { LOGIN_ERROR, LOGIN_START } from "../types";
+import { LOGIN_ERROR, LOGIN_EXITOSO, LOGIN_START } from "../types";
 
 const iniitalState = {
   error: false,
+  autenticado: null,
+  categoria: null,
 };
 
 export default function (state = iniitalState, action) {
@@ -15,6 +17,14 @@ export default function (state = iniitalState, action) {
       return {
         ...state,
         error: action.payload,
+      };
+    }
+    case LOGIN_EXITOSO: {
+      localStorage.setItem("token", action.payload);
+      return {
+        ...state,
+        error: false,
+        autenticado: true,
       };
     }
     default:

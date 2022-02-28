@@ -7,13 +7,19 @@ export const loginAction = (datos) => {
   return async (dispatch) => {
     dispatch(login());
     try {
-      if (!datos) {
-        dispatch(loginError());
-      }
-      const token = await clienteAxios.post("/api/auth", datos);
-      console.log(token);
+      /* extraemos el token */
+      const respuesta = await clienteAxios.post("/api/auth", datos.usuario);
+      dispatch(loginExitoso(respuesta.data.token));
     } catch (error) {
       console.log(error);
+      let errorMsg;
+      if (!error.response.data.errores) {
+        errorMsg = error.response.data;
+        dispatch(loginError([errorMsg]));
+      } else {
+        errorMsg = error.response.data.errores;
+        dispatch(loginError(errorMsg));
+      }
     }
   };
 };
@@ -24,7 +30,7 @@ const loginExitoso = (token) => ({
   type: LOGIN_EXITOSO,
   payload: token,
 });
-const loginError = () => ({
+const loginError = (errorMsg) => ({
   type: LOGIN_ERROR,
-  payload: true,
+  payload: errorMsg,
 });

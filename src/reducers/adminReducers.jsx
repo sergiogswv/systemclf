@@ -6,8 +6,14 @@ import {
   AGREGAR_ADMIN,
   AGREGAR_ADMIN_SUCCESS,
   AGREGAR_ADMIN_ERROR,
-  CAMBIAR_STATUS,
-  CAMBIAR_STATUS_EXITO,
+  OBTENER_ADMIN_EDITAR,
+  ADMIN_EDITAR,
+  ADMIN_EDITAR_EXITO,
+  ADMIN_EDITAR_ERROR,
+  ADMIN_ELIMINAR,
+  ADMIN_ELIMINAR_EXITO,
+  ADMIN_ELIMINAR_ERROR,
+  OCULTAR_ALERTA,
 } from "../types";
 
 const initialState = {
@@ -16,7 +22,8 @@ const initialState = {
   error: false,
   msg: null,
   agregando: false,
-  idEditarStatus: null,
+  adminEditar: null,
+  adminEliminar: null,
 };
 
 export default function (state = initialState, action) {
@@ -49,26 +56,55 @@ export default function (state = initialState, action) {
       };
     case AGREGAR_ADMIN_ERROR:
     case OBTENER_ADMINS_ERROR:
+    case ADMIN_EDITAR_ERROR:
       return {
         ...state,
         msg: action.payload,
         error: true,
         agregando: false,
       };
-    case CAMBIAR_STATUS:
+    case OBTENER_ADMIN_EDITAR:
       return {
         ...state,
-        idEditarStatus: action.payload,
+        adminEditar: action.payload,
       };
-    case CAMBIAR_STATUS_EXITO:
+    case ADMIN_EDITAR:
       return {
         ...state,
-        idEditarStatus: action.payload,
+      };
+
+    case ADMIN_EDITAR_EXITO:
+      return {
+        ...state,
+        adminEditar: null,
         admins: state.admins.map((admin) =>
-          admin.id === action.payload.id
-            ? [(admin.estatus = !action.payload.estatus)]
-            : admin
+          admin.id === action.payload._id ? (admin = action.payload) : admin
         ),
+      };
+    /* casos de eliminar */
+    case ADMIN_ELIMINAR:
+      return {
+        ...state,
+        adminEliminar: action.payload,
+      };
+    case ADMIN_ELIMINAR_EXITO:
+      return {
+        ...state,
+        adminEliminar: null,
+        admins: state.admins.filter((admin) => admin._id !== action.payload),
+      };
+    case ADMIN_ELIMINAR_ERROR:
+      return {
+        ...state,
+        error: true,
+        msg: action.payload,
+        adminEliminar: null,
+      };
+    case OCULTAR_ALERTA:
+      return {
+        ...state,
+        error: action.payload,
+        msg: null,
       };
     default:
       return state;

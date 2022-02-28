@@ -1,6 +1,7 @@
 import Login from "./components/Login";
 import Panel from "./components/Panel";
 import FormularioAdmin from "./components/FormularioAdmin";
+import EditarAdmin from "./components/EditarAdmin";
 import FormularioProf from "./components/FormularioProf";
 import FormularioMateria from "./components/FormularioMateria";
 import Profesores from "./components/Profesores";
@@ -17,7 +18,6 @@ import store from "./store";
 function App() {
   return (
     <BrowserRouter>
-      {" "}
       <Provider store={store}>
         <Routes>
           <Route>
@@ -26,6 +26,7 @@ function App() {
           <Route>
             <Route path="/panel" element={<Panel />} />
             <Route path="/panel/nuevo-admin" element={<FormularioAdmin />} />
+            <Route path="/panel/editar/:id" element={<EditarAdmin />} />
           </Route>
           <Route>
             <Route path="/escuela" element={<Panel />} />

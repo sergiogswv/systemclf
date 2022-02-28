@@ -1,9 +1,11 @@
-import styled from "@emotion/styled";
-import Layout from "../components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../actions/loginActions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Error from "./Layout/Error";
+import styled from "@emotion/styled";
+import Layout from "../components/Layout/Layout";
+import { verificarTokenAction } from "../actions/tokenActions";
 
 const ContenedorLogin = styled.div`
   background-color: var(--primary);
@@ -69,9 +71,24 @@ const Boton = styled.input`
   text-decoration: none;
 `;
 
-const Login = (e) => {
+const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const obtenerToken = () => {
+      let token = localStorage.getItem("token");
+      dispatch(verificarTokenAction(token));
+      /* Acceder a autenticado */
+      if (token !== "") {
+        /* Si token no esta vacio */
+        navigate("/panel");
+      }
+    };
+    obtenerToken();
+  }, []);
+
   const [usuario, setUsuario] = useState({
-    correo: "",
+    email: "",
     password: "",
   });
 
@@ -79,7 +96,7 @@ const Login = (e) => {
   const error = useSelector((state) => state.login.error);
 
   /* Extraer de usuario */
-  const { correo, password } = usuario;
+  const { email, password } = usuario;
 
   /* setear en local state */
   const onChange = (e) => {
@@ -89,12 +106,13 @@ const Login = (e) => {
     });
   };
 
-  const dispatch = useDispatch();
-
-  const iniciarSesion = (e) => {
+  const iniciarSesion = async (e) => {
     e.preventDefault();
-
-    dispatch(loginAction());
+    //console.log({ usuario });
+    dispatch(loginAction({ usuario }));
+    if (autenticado) {
+      navigate("/panel");
+    }
   };
 
   return (
@@ -104,16 +122,16 @@ const Login = (e) => {
         <Titulo>Iniciar Sesión</Titulo>
         {/* Formulario */}
         <Formulario onSubmit={iniciarSesion}>
-          {/* Campo de Correo */}
+          {/* Campo de email */}
           <Campo>
-            <label htmlFor="correo">Correo:</label>
+            <label htmlFor="email">Email:</label>
             <input
               type="text"
               placeholder="Email"
-              name="correo"
-              id="correo"
+              name="email"
+              id="email"
               onChange={onChange}
-              value={correo}
+              value={email}
             />
           </Campo>
           {/* Campo de contraseña */}
@@ -129,7 +147,8 @@ const Login = (e) => {
             />
           </Campo>
           {/* boton de Enviar */}
-          {error && <Error errorMsg={"Todos los campos son obligatorios"} />}
+          {error &&
+            error.map((err) => <Error errorMsg={err.msg} key={err.param} />)}
           <Boton type="submit" value="Enviar" />
         </Formulario>
       </ContenedorLogin>

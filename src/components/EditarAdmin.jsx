@@ -1,20 +1,15 @@
 import Layout from "./Layout/Layout";
-import {
-  Contenedor,
-  Boton,
-  Label,
-  CampoForm,
-} from "./helpers/FormularioHelpers";
+import { Contenedor, Label, CampoForm } from "./helpers/FormularioHelpers";
 import styled from "@emotion/styled";
 import Error from "./Layout/Error";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /* Redux */
 import { useDispatch, useSelector } from "react-redux";
 
 /* Actions */
-import { agregarAdmin } from "../actions/adminActions";
+import { editarAdminAction } from "../actions/adminActions";
 
 /* Estilos de formulario */
 const Formulario = styled.form`
@@ -27,18 +22,27 @@ const Campo = styled.input`
   height: 2rem;
 `;
 
-const FormularioAdmin = () => {
+const BotonInput = styled.input`
+  border-radius: 10px;
+  height: 3rem;
+  margin-top: 1rem;
+  width: 10rem;
+  background-color: var(--secondary);
+  border: none;
+  text-align: center;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-left: 65%;
+  @media (max-width: 768px) {
+    margin-left: 40%;
+  }
+`;
+
+const EditarAdmin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  /* Obtenemos el token del state */
-  const token = useSelector((state) => state.token.token);
-
-  /* Estate de Error */
-  const [error, setError] = useState(false);
-  const errorMsg = useSelector((state) => state.admins.msg);
-  const errorReducer = useSelector((state) => state.admins.error);
-
   /* state local */
   const [admin, setAdmin] = useState({
     nombre: "",
@@ -48,8 +52,19 @@ const FormularioAdmin = () => {
     privilegios: "",
   });
 
-  /* Destruturing de los admin  */
-  const { nombre, paterno, materno, cuenta, privilegios } = admin;
+  /* Obtenemos el token del state */
+  const token = useSelector((state) => state.token.token);
+
+  /* Estate de Error */
+  const [error, setError] = useState(false);
+  const errorMsg = useSelector((state) => state.admins.msg);
+  const errorReducer = useSelector((state) => state.admins.error);
+  /* State de admin a editar */
+  const adminEditar = useSelector((state) => state.admins.adminEditar);
+
+  useEffect(() => {
+    setAdmin(adminEditar);
+  }, [adminEditar]);
 
   /* Funcion que captura lo que se escribe */
   const handleChange = (e) => {
@@ -59,30 +74,35 @@ const FormularioAdmin = () => {
     });
   };
 
-  const agregarAdminSubmit = (admin, token) =>
-    dispatch(agregarAdmin(admin, token));
-
-  /* Agrega el profesor en el state */
+  /* Agrega el admin en el state */
   const handleSubmit = (e) => {
     e.preventDefault();
     /* Valida que nada este vacio */
-    if ([nombre, paterno, materno, cuenta, privilegios].includes("")) {
+    if (
+      [
+        admin.nombre,
+        admin.paterno,
+        admin.materno,
+        admin.cuenta,
+        admin.privilegios,
+      ].includes("")
+    ) {
       setError(true);
       return null;
     }
-
-    /* Agregar el profesor con token*/
-    agregarAdminSubmit(admin, token);
+    /* Edita el admin con token*/
+    dispatch(editarAdminAction(admin, token));
 
     setError(false);
     /* Redireccionar */
+
     navigate("/panel");
   };
   return (
     <Layout>
       {/* Contenedor */}
       <Contenedor>
-        <h1>Alta de Administradores</h1>
+        <h1>Edición de Administradores</h1>
         {/* Formulario de admin */}
         <Formulario onSubmit={handleSubmit}>
           <CampoForm>
@@ -93,6 +113,7 @@ const FormularioAdmin = () => {
               name="nombre"
               onChange={(e) => handleChange(e)}
               placeholder="Nombre"
+              value={admin.nombre}
             />
           </CampoForm>
           <CampoForm>
@@ -103,6 +124,7 @@ const FormularioAdmin = () => {
               name="paterno"
               onChange={(e) => handleChange(e)}
               placeholder="Apellido paterno"
+              value={admin.paterno}
             />
           </CampoForm>
           <CampoForm>
@@ -113,6 +135,7 @@ const FormularioAdmin = () => {
               name="materno"
               onChange={(e) => handleChange(e)}
               placeholder="Apellido Materno"
+              value={admin.materno}
             />
           </CampoForm>
           <CampoForm>
@@ -123,12 +146,17 @@ const FormularioAdmin = () => {
               name="cuenta"
               onChange={(e) => handleChange(e)}
               placeholder="Número de cuenta"
+              value={admin.cuenta}
             />
           </CampoForm>
           <CampoForm>
             <Label>Privilegios:</Label>
             {/* Seleccion de Privilegios */}
-            <select name="privilegios" onChange={(e) => handleChange(e)}>
+            <select
+              name="privilegios"
+              onChange={(e) => handleChange(e)}
+              value={admin.privilegios}
+            >
               <option>-- Seleccione Privilegios --</option>
               <option value={"R"}>Lectura</option>
               <option value={"RW"}>Lectura y Escritura</option>
@@ -138,13 +166,11 @@ const FormularioAdmin = () => {
           {error && <Error errorMsg={"Todos los campos son obligatorios"} />}
           {errorReducer && <Error errorMsg={errorMsg} />}
           {/* Boton de agregar */}
-          <Boton value="Agregar">
-            <input type="Submit" />
-          </Boton>
+          <BotonInput type="Submit" value="Guardar cambios" />
         </Formulario>
       </Contenedor>
     </Layout>
   );
 };
 
-export default FormularioAdmin;
+export default EditarAdmin;
