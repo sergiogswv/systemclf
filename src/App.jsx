@@ -9,6 +9,7 @@ import EditarProf from "./components/EditarProf";
 import Materias from "./components/Materias";
 import EditarMateria from "./components/EditarMateria";
 import Alumnos from "./components/Alumnos";
+import EditarAlumno from "./components/EditarAlumno";
 import FormularioAlumno from "./components/FormularioAlumno";
 import Calificaciones from "./components/Calificaciones";
 
@@ -43,6 +44,10 @@ function App() {
               element={<EditarMateria />}
             />
             <Route path="/escuela/alumnos" element={<Alumnos />} />
+            <Route
+              path="/escuela/alumnos/editar/:id"
+              element={<EditarAlumno />}
+            />
             <Route
               path="/escuela/nuevo-profesor"
               element={<FormularioProf />}

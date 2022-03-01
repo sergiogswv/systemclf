@@ -34,13 +34,10 @@ export const descargarAdminAction = (token) => {
           },
         };
         const respuesta = await clienteAxios("/api/admins", config);
-        //console.log(respuesta.data.admins);
         dispatch(obtenerAdminsExito(respuesta.data.admins));
       } catch (error) {
-        console.log(error.response);
         const msg = "Hubo un error, no se puede obtener la información";
         dispatch(obtenerAdminsError(msg));
-        console.log(error);
       }
     }, 2000);
   };

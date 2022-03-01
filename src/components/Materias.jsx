@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Contenedor, Tabla } from "../components/helpers/ViewHelpers";
 import Spinner from "../components/helpers/Spinner";
+import Error from "./Layout/Error";
 import Layout from "./Layout/Layout";
 
 /* Redux */

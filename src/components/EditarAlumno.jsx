@@ -10,7 +10,8 @@ import styled from "@emotion/styled";
 import Error from "./Layout/Error";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { agregarAlumnos } from "../actions/alumnoActions";
+import { editarAlumno } from "../actions/alumnoActions";
+import { useEffect } from "react";
 
 /* Estilos de Campos */
 const Campoinput = styled.input`
@@ -22,15 +23,34 @@ const Formulario = styled.form`
   display: block;
   width: 100%;
 `;
+const BotonInput = styled.input`
+  border-radius: 10px;
+  height: 3rem;
+  margin-top: 1rem;
+  width: 10rem;
+  background-color: var(--secondary);
+  border: none;
+  text-align: center;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-left: 65%;
+  @media (max-width: 768px) {
+    margin-left: 40%;
+  }
+`;
 
-const FormularioAlumno = () => {
+const EditarAlumno = () => {
   const dispatch = useDispatch();
   /* Usar hook de useNavigate */
   const navigate = useNavigate();
 
   const token = useSelector((state) => state.token.token);
-  const errorReducer = useSelector((state) => state.materias.error);
-  const errorMsg = useSelector((state) => state.materias.msg);
+  const errorMsg = useSelector((state) => state.alumnos.msg);
+
+  /* Alumno a editar */
+  const alumnoEditar = useSelector((state) => state.alumnos.alumnoEditar);
 
   /* State local de materias */
   const grados = [
@@ -51,6 +71,10 @@ const FormularioAlumno = () => {
     grado: "",
     cuenta: "",
   });
+
+  useEffect(() => {
+    setAlumno(alumnoEditar);
+  }, []);
 
   /* Estate de Error */
   const [error, setError] = useState(false);
@@ -75,20 +99,17 @@ const FormularioAlumno = () => {
     }
     setError(false);
     /* Agregar el alumno */
-    dispatch(agregarAlumnos(alumno, token));
-
+    dispatch(editarAlumno(alumno, token));
     /* Alerta de sweetalert */
     Swal.fire({
       position: "center",
       icon: "success",
-      title: "El registro fue agregado correctamente",
+      title: "El registro fue editado correctamente",
       showConfirmButton: false,
       timer: 1500,
     });
     /* Redireccionar */
-    setTimeout(() => {
-      navigate("/escuela/alumnos");
-    }, 1500);
+    navigate("/escuela/alumnos");
   };
 
   return (
@@ -107,6 +128,7 @@ const FormularioAlumno = () => {
               name="nombre"
               onChange={(e) => handleChange(e)}
               placeholder="Nombre"
+              value={nombre}
             />
           </CampoForm>
           <CampoForm>
@@ -117,6 +139,7 @@ const FormularioAlumno = () => {
               name="paterno"
               onChange={(e) => handleChange(e)}
               placeholder="Apellido Paterno"
+              value={paterno}
             />
           </CampoForm>
           <CampoForm>
@@ -127,13 +150,18 @@ const FormularioAlumno = () => {
               name="materno"
               onChange={(e) => handleChange(e)}
               placeholder="Apellido Materno"
+              value={materno}
             />
           </CampoForm>
 
           {/* Grados */}
           <CampoForm>
             <Label>Grado:</Label>
-            <select onChange={(e) => handleChange(e)} name="grado">
+            <select
+              onChange={(e) => handleChange(e)}
+              name="grado"
+              value={grado}
+            >
               <option value="">-- Seleccione Semestre --</option>
               {/* Iteracion de cada Semestre */}
               {grados.map((grado) => (
@@ -151,19 +179,19 @@ const FormularioAlumno = () => {
               name="cuenta"
               onChange={(e) => handleChange(e)}
               placeholder="Número de Cuenta"
+              value={cuenta}
             />
           </CampoForm>
           {/* Error */}
           {error && <Error errorMsg={"Todos los campos son obligatorios"} />}
           {errorMsg && <Error errorMsg={errorMsg} />}
           {/* Boton de agregar */}
-          <Boton value="Agregar">
-            <input type="Submit" />
-          </Boton>
+
+          <BotonInput type="Submit" value="Guardar cambios" />
         </Formulario>
       </Contenedor>
     </Layout>
   );
 };
 
-export default FormularioAlumno;
+export default EditarAlumno;
