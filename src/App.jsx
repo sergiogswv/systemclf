@@ -7,6 +7,7 @@ import FormularioMateria from "./components/FormularioMateria";
 import Profesores from "./components/Profesores";
 import EditarProf from "./components/EditarProf";
 import Materias from "./components/Materias";
+import EditarMateria from "./components/EditarMateria";
 import Alumnos from "./components/Alumnos";
 import FormularioAlumno from "./components/FormularioAlumno";
 import Calificaciones from "./components/Calificaciones";
@@ -37,6 +38,10 @@ function App() {
               element={<EditarProf />}
             />
             <Route path="/escuela/materias" element={<Materias />} />
+            <Route
+              path="/escuela/materias/editar/:id"
+              element={<EditarMateria />}
+            />
             <Route path="/escuela/alumnos" element={<Alumnos />} />
             <Route
               path="/escuela/nuevo-profesor"

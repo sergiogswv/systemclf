@@ -5,11 +5,11 @@ import {
   CampoForm,
   Boton,
 } from "./helpers/FormularioHelpers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import Error from "./Layout/Error";
 import { useNavigate } from "react-router-dom";
-import { crearMateriaAction } from "../actions/materiasActions";
+import { editarMateriaAction } from "../actions/materiasActions";
 import { useDispatch, useSelector } from "react-redux";
 
 /* Estilos de Campos */
@@ -22,8 +22,25 @@ const Formulario = styled.form`
   display: block;
   width: 100%;
 `;
+const BotonInput = styled.input`
+  border-radius: 10px;
+  height: 3rem;
+  margin-top: 1rem;
+  width: 10rem;
+  background-color: var(--secondary);
+  border: none;
+  text-align: center;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-left: 65%;
+  @media (max-width: 768px) {
+    margin-left: 40%;
+  }
+`;
 
-const FormularioMateria = () => {
+const EditarMateria = () => {
   const token = useSelector((state) => state.token.token);
 
   const dispatch = useDispatch();
@@ -51,6 +68,14 @@ const FormularioMateria = () => {
     clave: "",
   });
 
+  /* Extraer el prof a editar */
+  const materiaEditar = useSelector((state) => state.materias.materiaEditar);
+
+  useEffect(() => {
+    /* Setear con el profe a editar en el state */
+    setMateria(materiaEditar);
+  }, [materiaEditar]);
+
   /* Estate de Error */
   const [error, setError] = useState(false);
   const errorMsg = useSelector((state) => state.materias.msg);
@@ -75,20 +100,18 @@ const FormularioMateria = () => {
     }
     setError(false);
     /* Agregar el profesor */
-    dispatch(crearMateriaAction(materia, token));
+    dispatch(editarMateriaAction(materia, token));
 
     /* Redireccionar */
     Swal.fire({
       position: "center",
       icon: "success",
-      title: "El registro fue agregado correctamente",
+      title: "El registro fue editado correctamente",
       showConfirmButton: false,
       timer: 1500,
     });
     /* Redireccionar */
-    setTimeout(() => {
-      navigate("/escuela/materias");
-    }, 1500);
+    navigate("/escuela/materias");
   };
 
   return (
@@ -107,12 +130,17 @@ const FormularioMateria = () => {
               name="nombre"
               onChange={(e) => handleChange(e)}
               placeholder="Nombre"
+              value={nombre}
             />
           </CampoForm>
           {/* Grados */}
           <CampoForm>
             <Label>Grado:</Label>
-            <select onChange={(e) => handleChange(e)} name="grado">
+            <select
+              onChange={(e) => handleChange(e)}
+              name="grado"
+              value={grado}
+            >
               <option value="">-- Seleccione Grado --</option>
               {/* Iteracion de cada Grado */}
               {grados.map((grado) => (
@@ -128,11 +156,16 @@ const FormularioMateria = () => {
               name="creditos"
               onChange={(e) => handleChange(e)}
               placeholder="#Creditos"
+              value={creditos}
             />
           </CampoForm>
           <CampoForm>
             <Label>Opción:</Label>
-            <select onChange={(e) => handleChange(e)} name="opcion">
+            <select
+              onChange={(e) => handleChange(e)}
+              name="opcion"
+              value={opcion}
+            >
               <option value="">-- Seleccione Opción --</option>
               <option value="Obligatoria">Obligatoria</option>
               <option value="Opcional">Opcional</option>
@@ -147,19 +180,19 @@ const FormularioMateria = () => {
               name="clave"
               onChange={(e) => handleChange(e)}
               placeholder="Clave de materia"
+              value={clave}
             />
           </CampoForm>
           {/* Error */}
           {error && <Error errorMsg={"Todos los campos son obligatorios"} />}
           {errorMsg && <Error errorMsg={errorMsg} />}
           {/* Boton de agregar */}
-          <Boton value="Agregar">
-            <input type="Submit" />
-          </Boton>
+
+          <BotonInput type="Submit" value="Guardar cambios" />
         </Formulario>
       </Contenedor>
     </Layout>
   );
 };
 
-export default FormularioMateria;
+export default EditarMateria;

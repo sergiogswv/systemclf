@@ -10,7 +10,11 @@ import Layout from "./Layout/Layout";
 
 /* Redux */
 import { useSelector, useDispatch } from "react-redux";
-import { descargarMateriasAction } from "../actions/materiasActions";
+import {
+  descargarMateriasAction,
+  eliminarMateria,
+  elegirMateriaEditar,
+} from "../actions/materiasActions";
 
 const BotonInput = styled.input`
   border-radius: 5px;
@@ -23,6 +27,7 @@ const BotonInput = styled.input`
   text-transform: uppercase;
   font-size: 1rem;
   height: 2rem;
+  cursor: pointer;
 `;
 const BotonInputEliminar = styled.input`
   border-radius: 5px;
@@ -35,6 +40,7 @@ const BotonInputEliminar = styled.input`
   text-transform: uppercase;
   font-size: 1rem;
   height: 2rem;
+  cursor: pointer;
 `;
 const Acciones = styled.div`
   display: block;
@@ -55,10 +61,10 @@ const Materias = () => {
   }, []);
 
   /* Funcion que edita el prof */
-  /* const editarProfFn = (profesor) => {
-    dispatch(obtenerProfEditar(profesor));
-    navigate(`/escuela/profesores/editar/${profesor._id}`);
-  }; */
+  const editarMateriaFn = (materia) => {
+    dispatch(elegirMateriaEditar(materia));
+    navigate(`/escuela/materias/editar/${materia._id}`);
+  };
   /* Funcion que elimina el prof */
   const eliminarMateriaFn = (materia) => {
     Swal.fire({
@@ -72,7 +78,7 @@ const Materias = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("¡Eliminado!", "El registro a sido eliminado.", "success");
-        dispatch(eliminarProf(materia, token));
+        dispatch(eliminarMateria(materia, token));
       }
     });
   };
