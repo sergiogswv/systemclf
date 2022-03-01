@@ -94,8 +94,16 @@ const EditarAdmin = () => {
     dispatch(editarAdminAction(admin, token));
 
     setError(false);
-    /* Redireccionar */
 
+    /* Alerta de sweetalert */
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "El registro fue agregado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    /* Redireccionar */
     navigate("/panel");
   };
   return (

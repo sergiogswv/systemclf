@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
-import Logo from "../img/Logo.png";
-import SignIn from "../img/sign-in.png";
+import Logo from "../../public/img/Logo.png";
+import SignIn from "../../public/img/sign-in.png";
 import {
   mostrarMenuAction,
   ocultarMenuAction,

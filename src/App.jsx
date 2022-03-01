@@ -5,6 +5,7 @@ import EditarAdmin from "./components/EditarAdmin";
 import FormularioProf from "./components/FormularioProf";
 import FormularioMateria from "./components/FormularioMateria";
 import Profesores from "./components/Profesores";
+import EditarProf from "./components/EditarProf";
 import Materias from "./components/Materias";
 import Alumnos from "./components/Alumnos";
 import FormularioAlumno from "./components/FormularioAlumno";
@@ -31,6 +32,10 @@ function App() {
           <Route>
             <Route path="/escuela" element={<Panel />} />
             <Route path="/escuela/profesores" element={<Profesores />} />
+            <Route
+              path="/escuela/profesores/editar/:id"
+              element={<EditarProf />}
+            />
             <Route path="/escuela/materias" element={<Materias />} />
             <Route path="/escuela/alumnos" element={<Alumnos />} />
             <Route

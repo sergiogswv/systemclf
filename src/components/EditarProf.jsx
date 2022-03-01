@@ -1,16 +1,11 @@
 import Layout from "./Layout/Layout";
-import {
-  Contenedor,
-  Label,
-  CampoForm,
-  Boton,
-} from "./helpers/FormularioHelpers";
-import { useState } from "react";
+import { Contenedor, Label, CampoForm } from "./helpers/FormularioHelpers";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import Error from "./Layout/Error";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { crearProfesor } from "../actions/profActions";
+import { editarProf } from "../actions/profActions";
 
 /* Estilos de Campos */
 const Campoinput = styled.input`
@@ -22,14 +17,28 @@ const Formulario = styled.form`
   display: block;
   width: 100%;
 `;
+const BotonInput = styled.input`
+  border-radius: 10px;
+  height: 3rem;
+  margin-top: 1rem;
+  width: 10rem;
+  background-color: var(--secondary);
+  border: none;
+  text-align: center;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-left: 65%;
+  @media (max-width: 768px) {
+    margin-left: 40%;
+  }
+`;
 
-const FormularioProf = () => {
+const EditarProf = () => {
   /* Usar hook de useNavigate */
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  /* Extraer el token */
-  const token = useSelector((state) => state.token.token);
-
   /* State local para profesor */
   const [profesor, setProfesor] = useState({
     nombre: "",
@@ -37,13 +46,23 @@ const FormularioProf = () => {
     materno: "",
     cuenta: "",
   });
+
+  /* Extraer el token */
+  const token = useSelector((state) => state.token.token);
+
+  /* Extraer el prof a editar */
+  const profesorEditar = useSelector((state) => state.profs.profEditar);
+
+  useEffect(() => {
+    /* Setear con el profe a editar en el state */
+    setProfesor(profesorEditar);
+  }, [profesorEditar]);
+
   /* Estate de Error */
   const [error, setError] = useState(false);
   /* Extraer el error del estate */
   const errorMsg = useSelector((state) => state.profs.msg);
 
-  /* Destructuring profesor */
-  const { nombre, paterno, materno, cuenta } = profesor;
   /* Agrega lo escrito en el state */
   const handleChange = (e) => {
     setProfesor({
@@ -55,7 +74,14 @@ const FormularioProf = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     /* Valida que nada este vacio */
-    if ([nombre, paterno, materno, cuenta].includes("")) {
+    if (
+      [
+        profesor.nombre,
+        profesor.paterno,
+        profesor.materno,
+        profesor.cuenta,
+      ].includes("")
+    ) {
       setError(true);
 
       return null;
@@ -63,20 +89,19 @@ const FormularioProf = () => {
     setError(false);
     /* Agregar el profesor */
     /* Action de prof */
-    dispatch(crearProfesor(profesor, token));
+    dispatch(editarProf(profesor, token));
 
+    /* Redireccionar */
     /* Alerta de sweetalert */
     Swal.fire({
       position: "center",
       icon: "success",
-      title: "El registro fue agregado correctamente",
+      title: "El registro fue editado correctamente",
       showConfirmButton: false,
       timer: 1500,
     });
     /* Redireccionar */
-    setTimeout(() => {
-      navigate("/escuela/profesores");
-    }, 1500);
+    navigate("/escuela/profesores");
   };
 
   return (
@@ -98,6 +123,7 @@ const FormularioProf = () => {
                   name="nombre"
                   onChange={(e) => handleChange(e)}
                   placeholder="Nombre"
+                  value={profesor.nombre}
                 />
               </CampoForm>
               <CampoForm>
@@ -108,6 +134,7 @@ const FormularioProf = () => {
                   name="paterno"
                   onChange={(e) => handleChange(e)}
                   placeholder="Apellido Paterno"
+                  value={profesor.paterno}
                 />
               </CampoForm>
               <CampoForm>
@@ -118,6 +145,7 @@ const FormularioProf = () => {
                   name="materno"
                   onChange={(e) => handleChange(e)}
                   placeholder="Apellido Materno"
+                  value={profesor.materno}
                 />
               </CampoForm>
               <CampoForm>
@@ -128,6 +156,7 @@ const FormularioProf = () => {
                   name="cuenta"
                   onChange={(e) => handleChange(e)}
                   placeholder="Número de cuenta"
+                  value={profesor.cuenta}
                 />
               </CampoForm>
 
@@ -136,9 +165,8 @@ const FormularioProf = () => {
               )}
               {errorMsg && <Error errorMsg={errorMsg} />}
               {/* Boton de agregar */}
-              <Boton value="Agregar">
-                <input type="Submit" />
-              </Boton>
+
+              <BotonInput type="Submit" value="Guardar cambios" />
             </Formulario>
           </>
         )}
@@ -147,4 +175,4 @@ const FormularioProf = () => {
   );
 };
 
-export default FormularioProf;
+export default EditarProf;

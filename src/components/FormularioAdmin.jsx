@@ -75,8 +75,19 @@ const FormularioAdmin = () => {
     agregarAdminSubmit(admin, token);
 
     setError(false);
+
+    /* Alerta de sweetalert */
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "El registro fue agregado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     /* Redireccionar */
-    navigate("/panel");
+    setTimeout(() => {
+      navigate("/panel");
+    }, 1500);
   };
   return (
     <Layout>

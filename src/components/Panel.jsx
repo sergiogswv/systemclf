@@ -53,7 +53,20 @@ const Panel = () => {
 
   /* Funcion que elimina admin */
   const eliminarAdminFn = (admin) => {
-    dispatch(eliminarAdminAction(admin, token));
+    Swal.fire({
+      title: "¿Estás seguro de eliminar este registro?",
+      text: "¡No se podrá recuperar!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, eliminar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("¡Eliminado!", "El registro a sido eliminado.", "success");
+        dispatch(eliminarAdminAction(admin, token));
+      }
+    });
   };
 
   return (

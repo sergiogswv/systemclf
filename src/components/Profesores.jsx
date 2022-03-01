@@ -1,49 +1,84 @@
+/* React */
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+/* css / helpers / imagenes */
 import styled from "@emotion/styled";
+import { Contenedor, Tabla } from "../components/helpers/ViewHelpers";
+import Spinner from "../components/helpers/Spinner";
 import Layout from "./Layout/Layout";
-import { Contenedor, Tabla, Boton } from "../components/helpers/ViewHelpers";
-import { useState } from "react";
+
+/* Redux */
+import { useSelector, useDispatch } from "react-redux";
+import {
+  descargarProfAction,
+  obtenerProfEditar,
+  eliminarProf,
+} from "../actions/profActions";
+
+const BotonInput = styled.input`
+  border-radius: 5px;
+  margin-left: 0.75rem;
+  margin-bottom: 0.75rem;
+  background-color: var(--secondary);
+  border: none;
+  text-align: center;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-size: 1rem;
+  height: 2rem;
+`;
+const BotonInputEliminar = styled.input`
+  border-radius: 5px;
+  margin-left: 0.75rem;
+  margin-top: 0.75rem;
+  background-color: var(--rojo);
+  border: none;
+  text-align: center;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-size: 1rem;
+  height: 2rem;
+`;
+const Acciones = styled.div`
+  display: block;
+  width: 100%;
+`;
 
 const Profesores = () => {
-  /* State local de administradores */
-  const [profesores, setProfesores] = useState([
-    {
-      nombre: "Sergio",
-      paterno: "Guadarrama",
-      materno: "Santillán",
-      id: 1,
-      categoria: "1000",
-      estatus: false,
-    },
-    {
-      nombre: "Emily",
-      paterno: "Guadarrama",
-      materno: "Payan",
-      id: 2,
-      categoria: "1000",
-      estatus: true,
-    },
-    {
-      nombre: "Angelica",
-      paterno: "Hernandez",
-      materno: "Muñiz",
-      id: 3,
-      categoria: "1000",
-      estatus: true,
-    },
-    {
-      nombre: "Brandon",
-      paterno: "Alcantara",
-      materno: "Ruiz",
-      id: 4,
-      categoria: "1000",
-      estatus: false,
-    },
-  ]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.token.token);
+  const errorMsg = useSelector((state) => state.profs.msg);
+  const cargando = useSelector((state) => state.profs.cargando);
+  const profesors = useSelector((state) => state.profs.profesors);
 
-  const [activar, setActivar] = useState(false);
-  /* Funcion que cammbia el status */
-  const cambiarEstatus = (id) => {
-    console.log(id);
+  /* consultar y descargar la lista de admins */
+  useEffect(() => {
+    dispatch(descargarProfAction(token));
+  }, []);
+
+  /* Funcion que edita el prof */
+  const editarProfFn = (profesor) => {
+    dispatch(obtenerProfEditar(profesor));
+    navigate(`/escuela/profesores/editar/${profesor._id}`);
+  };
+  /* Funcion que elimina el prof */
+  const eliminarProfFn = (profesor) => {
+    Swal.fire({
+      title: "¿Estás seguro de eliminar este registro?",
+      text: "¡No se podrá recuperar!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, eliminar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("¡Eliminado!", "El registro a sido eliminado.", "success");
+        dispatch(eliminarProf(profesor, token));
+      }
+    });
   };
 
   return (
@@ -51,41 +86,54 @@ const Profesores = () => {
       <Contenedor>
         {/* <h1>Bienvenido(a): Sergio</h1> */}
         <h1>Profesores</h1>
-        <Tabla>
-          <thead>
-            <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Paterno</th>
-              <th scope="col">Materno</th>
-              <th scope="col">Estatus</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Iteracion por cada profesor */}
-            {profesores.map((profesor) => (
-              <tr key={profesor.id}>
-                <td scope="col">{profesor.nombre}</td>
-                <td scope="col">{profesor.paterno}</td>
-                <td scope="col">{profesor.materno}</td>
-                <td scope="col">
-                  {/* Status */}
-                  <button onClick={() => cambiarEstatus(profesor.id)}>
-                    {profesor.estatus ? "Activo" : "Inactivo"}
-                  </button>
-                </td>
-                {/* Botons de acciones */}
-                <td scope="col">
-                  <div>
-                    <Boton value="Editar" />
-                    <Boton value="Eliminar" />
-                    <Boton value="Asignar Materia" />
-                  </div>
-                </td>
+        {token === null ? (
+          navigate("/")
+        ) : cargando ? (
+          <Spinner />
+        ) : errorMsg ? (
+          <Error errorMsg={errorMsg} />
+        ) : (
+          <Tabla>
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Paterno</th>
+                <th scope="col">Materno</th>
+                <th scope="col">Número de cuenta</th>
+                <th scope="col">Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </Tabla>
+            </thead>
+            <tbody>
+              {/* Iteracion por cada profesor */}
+              {profesors.map((profesor) => (
+                <tr key={profesor._id}>
+                  <td scope="col">{profesor.nombre}</td>
+                  <td scope="col">{profesor.paterno}</td>
+                  <td scope="col">{profesor.materno}</td>
+                  <td scope="col">{profesor.cuenta}</td>
+                  {/* Botons de acciones */}
+                  <td scope="col">
+                    <div>
+                      <Acciones>
+                        <BotonInput
+                          value="Editar"
+                          type="submit"
+                          onClick={() => editarProfFn(profesor)}
+                        />
+                        <BotonInputEliminar
+                          value="Eliminar"
+                          type="submit"
+                          onClick={() => eliminarProfFn(profesor)}
+                        />
+                      </Acciones>
+                      <BotonInput value="Asignar Materia" type="submit" />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Tabla>
+        )}
       </Contenedor>
     </Layout>
   );
