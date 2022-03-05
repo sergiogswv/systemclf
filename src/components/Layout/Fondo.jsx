@@ -11,7 +11,7 @@ const FondoImagen = styled.div`
 const Imagen = styled.img`
   height: 100%;
   object-fit: cover;
-  margin: 0 10%;
+  margin: 0;
   @media (max-width: 768px) {
     display: none;
     margin: 0;
