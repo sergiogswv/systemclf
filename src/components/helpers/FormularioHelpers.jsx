@@ -3,9 +3,10 @@ import styled from "@emotion/styled";
 /* Contenedor para formularios */
 const ContenedorDiv = styled.div`
   background-color: #fff;
-  height: 40rem;
+  height: 100%;
   width: 90%;
   margin: 0 auto;
+  padding-bottom: 2rem;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.35);
   border-radius: 50px;
   h1 {
@@ -45,6 +46,15 @@ const BotonInput = styled.input`
   font-size: 1.5rem;
   font-weight: 400;
   margin-left: 65%;
+  cursor: pointer;
+
+  transform: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  :hover {
+    background-color: var(--blanco);
+    color: var(--secondary);
+  }
   @media (max-width: 768px) {
     margin-left: 40%;
   }

@@ -36,6 +36,15 @@ const BotonInput = styled.input`
   font-size: 0.8rem;
   font-weight: 400;
   margin-left: 65%;
+  cursor: pointer;
+
+  transform: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  :hover {
+    background-color: var(--blanco);
+    color: var(--secondary);
+  }
   @media (max-width: 768px) {
     margin-left: 40%;
   }

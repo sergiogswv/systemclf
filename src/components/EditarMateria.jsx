@@ -35,6 +35,15 @@ const BotonInput = styled.input`
   font-size: 0.8rem;
   font-weight: 400;
   margin-left: 65%;
+  cursor: pointer;
+
+  transform: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  :hover {
+    background-color: var(--blanco);
+    color: var(--secondary);
+  }
   @media (max-width: 768px) {
     margin-left: 40%;
   }
@@ -51,6 +60,7 @@ const EditarMateria = () => {
   const grados = [
     { id: 1, nombre: "1" },
     { id: 2, nombre: "2" },
+    { id: 3, nombre: "3" },
     { id: 4, nombre: "4" },
     { id: 5, nombre: "5" },
     { id: 6, nombre: "6" },

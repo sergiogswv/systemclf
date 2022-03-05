@@ -1,4 +1,6 @@
+import Inicio from "./components/Inicio";
 import Login from "./components/Login";
+import NuevaCuenta from "./components/NuevaCuenta";
 import Panel from "./components/Panel";
 import FormularioAdmin from "./components/FormularioAdmin";
 import EditarAdmin from "./components/EditarAdmin";
@@ -12,6 +14,7 @@ import Alumnos from "./components/Alumnos";
 import EditarAlumno from "./components/EditarAlumno";
 import FormularioAlumno from "./components/FormularioAlumno";
 import Calificaciones from "./components/Calificaciones";
+import AsignarCalificacion from "./components/AsignarCalificacion";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 /* Redux */
@@ -24,7 +27,13 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Inicio />} />
+          </Route>
+          <Route>
+            <Route path="/login" element={<Login />} />
+          </Route>
+          <Route>
+            <Route path="/crear-cuenta" element={<NuevaCuenta />} />
           </Route>
           <Route>
             <Route path="/panel" element={<Panel />} />
@@ -49,6 +58,10 @@ function App() {
               element={<EditarAlumno />}
             />
             <Route
+              path="/escuela/alumnos/calificaciones/:id"
+              element={<AsignarCalificacion />}
+            />
+            <Route
               path="/escuela/nuevo-profesor"
               element={<FormularioProf />}
             />
@@ -63,6 +76,9 @@ function App() {
           </Route>
           <Route>
             <Route path="/calificaciones" element={<Calificaciones />} />
+          </Route>
+          <Route>
+            <Route path="/*" element={<Inicio />} />
           </Route>
         </Routes>
       </Provider>

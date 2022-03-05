@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import BgFondo from "../../public/img/Fondo.png";
+import BgFondo from "../../public/img/Fondo2.png";
 
 const FondoImagen = styled.div`
   height: 100vh;
@@ -9,9 +9,6 @@ const FondoImagen = styled.div`
 const Imagen = styled.img`
   object-fit: cover;
   width: 100%;
-  @media (max-width: 768px) {
-    height: 100vh;
-  }
 `;
 
 const Fondo = () => {

@@ -1,4 +1,9 @@
-import { VERIFICAR_TOKEN, TOKEN_EXISTE, TOKEN_NO_EXISTE } from "../types";
+import {
+  VERIFICAR_TOKEN,
+  TOKEN_EXISTE,
+  TOKEN_NO_EXISTE,
+  ELIMINAR_TOKEN,
+} from "../types";
 
 export function verificarTokenAction(token) {
   return (dispatch) => {
@@ -21,4 +26,15 @@ const tokenExiste = (token) => ({
 const tokenNoExiste = () => ({
   type: TOKEN_NO_EXISTE,
   payload: null,
+});
+
+/* Quitar Token */
+export function eliminarTokenAction(token) {
+  return (dispatch) => {
+    dispatch(eliminarToken());
+  };
+}
+const eliminarToken = () => ({
+  type: ELIMINAR_TOKEN,
+  payload: true,
 });

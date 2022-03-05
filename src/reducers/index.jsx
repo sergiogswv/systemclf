@@ -6,6 +6,9 @@ import tokenReducer from "./tokenReducer";
 import profReducers from "./profReducers";
 import materiaReducer from "./materiaReducer";
 import alumnoReducer from "./alumnoReducer";
+import asignarReducer from "./asignarReducer";
+import califReducers from "./califReducers";
+import nuevaCuentaReducer from "./nuevaCuentaReducer";
 
 export default combineReducers({
   admins: adminReducers,
@@ -15,4 +18,7 @@ export default combineReducers({
   profs: profReducers,
   materias: materiaReducer,
   alumnos: alumnoReducer,
+  asignar: asignarReducer,
+  calificaciones: califReducers,
+  nuevaCuenta: nuevaCuentaReducer,
 });

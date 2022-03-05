@@ -12,6 +12,7 @@ import {
   ALUMNO_ELIMINAR,
   ALUMNO_ELIMINAR_SUCCESS,
   ALUMNO_ELIMINAR_ERROR,
+  OBTENER_ALUMNOS_CALIFICAR,
 } from "../types";
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
   msg: null,
   error: null,
   cargando: null,
+  alumnoCalificar: null,
 };
 
 export default function (state = initialState, action) {
@@ -30,7 +32,13 @@ export default function (state = initialState, action) {
     case DESCARGAR_ALUMNOS:
       return {
         ...state,
+        alumnos: [],
+        alumnoEliminar: null,
+        alumnoEditar: null,
+        msg: null,
+        error: null,
         cargando: true,
+        alumnoCalificar: null,
       };
     case ALUMNO_ELIMINAR_ERROR:
     case ALUMNO_EDITAR_ERROR:
@@ -40,6 +48,7 @@ export default function (state = initialState, action) {
         ...state,
         error: true,
         msg: action.payload,
+        alumnoCalificar: null,
       };
     case OBTENER_ALUMNOS_SUCCESS:
       return {
@@ -87,6 +96,11 @@ export default function (state = initialState, action) {
         alumnos: state.alumnos.filter(
           (alumno) => alumno._id !== action.payload._id
         ),
+      };
+    case OBTENER_ALUMNOS_CALIFICAR:
+      return {
+        ...state,
+        alumnoCalificar: action.payload,
       };
     default:
       return {

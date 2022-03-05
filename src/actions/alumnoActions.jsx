@@ -12,6 +12,7 @@ import {
   ALUMNO_ELIMINAR,
   ALUMNO_ELIMINAR_SUCCESS,
   ALUMNO_ELIMINAR_ERROR,
+  OBTENER_ALUMNOS_CALIFICAR,
 } from "../types";
 
 import clienteAxios from "../config/axios";
@@ -152,4 +153,15 @@ const eliminarAlumnoExito = (alumno) => ({
 const eliminarAlumnoError = (errorMsg) => ({
   type: ALUMNO_ELIMINAR_ERROR,
   payload: errorMsg,
+});
+
+/* Action para guardar el alumno a calificar */
+export function calificarAlumno(alumno) {
+  return (dispatch) => {
+    dispatch(calificarAlumnoAction(alumno));
+  };
+}
+const calificarAlumnoAction = (alumno) => ({
+  type: OBTENER_ALUMNOS_CALIFICAR,
+  payload: alumno,
 });

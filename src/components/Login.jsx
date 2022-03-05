@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../actions/loginActions";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Error from "./Layout/Error";
 import styled from "@emotion/styled";
 import Layout from "../components/Layout/Layout";
@@ -18,7 +18,10 @@ const ContenedorLogin = styled.div`
   padding-bottom: 1rem;
 
   @media (min-width: 768px) {
-    width: 50%;
+    width: 60%;
+  }
+  @media (min-width: 1220px) {
+    width: calc(30% + 100px);
   }
 `;
 
@@ -69,17 +72,30 @@ const Boton = styled.input`
   font-size: 1rem;
   font-weight: 400;
   text-decoration: none;
+  cursor: pointer;
+
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+
+  :hover {
+    background-color: var(--secondary);
+    color: var(--blanco);
+  }
 `;
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const autenticado = useSelector((state) => state.login.autenticado);
+
   useEffect(() => {
     const obtenerToken = () => {
       let token = localStorage.getItem("token");
       dispatch(verificarTokenAction(token));
       /* Acceder a autenticado */
-      if (token !== "") {
+      if (token !== null || autenticado) {
         /* Si token no esta vacio */
         navigate("/panel");
       }
@@ -146,6 +162,7 @@ const Login = () => {
               value={password}
             />
           </Campo>
+
           {/* boton de Enviar */}
           {error &&
             error.map((err) => <Error errorMsg={err.msg} key={err.param} />)}

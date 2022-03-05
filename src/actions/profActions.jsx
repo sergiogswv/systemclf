@@ -66,7 +66,6 @@ export function crearProfesor(profesor, token) {
       await clienteAxios.post("/api/profesores", profesor, config);
       dispatch(crearProfesorExito(profesor));
     } catch (error) {
-      console.log(error.response);
       let errorMsg = "Hubo un error al crear el profesor";
       dispatch(crearProfesorError(errorMsg));
     }

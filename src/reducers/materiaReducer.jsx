@@ -31,6 +31,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cargando: true,
+
+        materias: null,
       };
     case OBTENER_MATERIAS_SUCCESS:
       return {

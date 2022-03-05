@@ -8,7 +8,9 @@ const ContenedorDiv = styled.div`
   border-radius: 50px;
   width: 85%;
   margin: 0 auto;
+  padding-bottom: 2rem;
   height: 100vh;
+  overflow-y: auto;
   h1 {
     color: var(--secondary);
     padding-top: 2rem;

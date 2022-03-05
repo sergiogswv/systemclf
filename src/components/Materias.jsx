@@ -29,6 +29,14 @@ const BotonInput = styled.input`
   font-size: 1rem;
   height: 2rem;
   cursor: pointer;
+
+  transform: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  :hover {
+    background-color: var(--blanco);
+    color: var(--secondary);
+  }
 `;
 const BotonInputEliminar = styled.input`
   border-radius: 5px;
@@ -42,6 +50,14 @@ const BotonInputEliminar = styled.input`
   font-size: 1rem;
   height: 2rem;
   cursor: pointer;
+
+  transform: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  :hover {
+    background-color: var(--blanco);
+    color: var(--rojo);
+  }
 `;
 const Acciones = styled.div`
   display: block;
@@ -56,7 +72,7 @@ const Materias = () => {
   const cargando = useSelector((state) => state.materias.cargando);
   const materias = useSelector((state) => state.materias.materias);
 
-  /* consultar y descargar la lista de admins */
+  /* consultar y descargar la lista de materias */
   useEffect(() => {
     dispatch(descargarMateriasAction(token));
   }, []);

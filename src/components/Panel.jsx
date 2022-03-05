@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Layout from "./Layout/Layout";
 import Error from "./Layout/Error";
-import { Contenedor, Tabla, Boton } from "../components/helpers/ViewHelpers";
+import { Contenedor, Tabla } from "../components/helpers/ViewHelpers";
 import Spinner from "../components/helpers/Spinner";
 
 const BotonInput = styled.input`
@@ -14,6 +14,36 @@ const BotonInput = styled.input`
   text-transform: uppercase;
   font-size: 1rem;
   height: 2rem;
+  cursor: pointer;
+
+  transform: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  :hover {
+    background-color: var(--blanco);
+    color: var(--secondary);
+  }
+`;
+const BotonInputEliminar = styled.input`
+  border-radius: 5px;
+  margin-left: 0.75rem;
+  margin: 0 1rem;
+  background-color: var(--rojo);
+  border: none;
+  text-align: center;
+  color: var(--blanco);
+  text-transform: uppercase;
+  font-size: 1rem;
+  height: 2rem;
+  cursor: pointer;
+
+  transform: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  :hover {
+    background-color: var(--blanco);
+    color: var(--rojo);
+  }
 `;
 
 /* Actions */
@@ -110,11 +140,11 @@ const Panel = () => {
                       type="submit"
                       onClick={() => editarAdminFn(admin)}
                     ></BotonInput>
-                    <BotonInput
+                    <BotonInputEliminar
                       value="Eliminar"
                       type="submit"
                       onClick={() => eliminarAdminFn(admin._id)}
-                    ></BotonInput>
+                    ></BotonInputEliminar>
                   </td>
                 </tr>
               ))}

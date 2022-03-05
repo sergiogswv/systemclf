@@ -153,3 +153,29 @@ const eliminarMateriaError = (errorMsg) => ({
   type: MATERIA_ELIMINAR_ERROR,
   payload: errorMsg,
 });
+
+/* action para obtener las materias filtradas */
+export function descargarMateriasFilterAction(token, grado) {
+  return async (dispatch) => {
+    dispatch(descargarMaterias());
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Auth-Token": token,
+      },
+    };
+    setTimeout(async () => {
+      try {
+        const respuesta = await clienteAxios.post(
+          "/api/materiasFilter",
+          { grado },
+          config
+        );
+        dispatch(obtenerMateriasExito(respuesta.data.materias));
+      } catch (error) {
+        let errorMsg = "Hubo un error al descargar las materias";
+        dispatch(obtenerMateriasError(errorMsg));
+      }
+    }, 2000);
+  };
+}

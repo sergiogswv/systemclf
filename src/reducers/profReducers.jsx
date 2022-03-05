@@ -46,7 +46,7 @@ export default function (state = initialState, action) {
     case AGREGAR_PROF_SUCCESS:
       return {
         ...state,
-        profesors: [...state, action.payload],
+        profesors: [...state.profesors, action.payload],
         error: null,
         msg: null,
       };
