@@ -8,7 +8,7 @@ const ContenedorDiv = styled.div`
   width: 85%;
   margin: 2rem auto;
   padding-bottom: 2rem;
-  height: 100%;
+  height: 50%;
   h1 {
     color: var(--secondary);
     font-weight: 700;
@@ -29,6 +29,8 @@ const ContenedorDiv = styled.div`
 `;
 const Card = styled.div`
   background-color: #fff;
+  display: grid;
+  grid-template-columns: 30% 70%;
   align-items: center;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.35);
   border-radius: 50px;
@@ -38,6 +40,7 @@ const Card = styled.div`
     margin: 0 auto;
   }
   @media (max-width: 768px) {
+    display: block;
     width: 100%;
   }
 `;
@@ -46,6 +49,9 @@ const Image = styled.img`
   text-align: center;
   align-items: center;
   margin: 1rem 2rem;
+  @media (min-width: 768px) {
+    width: 50%;
+  }
 `;
 const BotonInput = styled.input`
   border-radius: 10px;
@@ -83,15 +89,20 @@ const Inicio = () => {
       <ContenedorDiv>
         <h1>System CLF</h1>
         <Card>
-          <Image src={ImgClf} alt="Imagen" />
-          <h1>Prueba System CLF</h1>
-          <p>
-            Crea una cuenta y prueba nuestro sistema para llevar un mejor
-            control de tu profesorado, alumnado y administradores internos
-          </p>
-          <Link to={"/crear-cuenta"}>
-            <BotonInput value="Crear cuenta" />
-          </Link>
+          <div>
+            <Image src={ImgClf} alt="Imagen" />
+          </div>
+          <div>
+            <h1>Prueba System CLF</h1>
+            <p>
+              Crea una cuenta y prueba nuestro sistema para llevar un mejor
+              control de tu profesorado, alumnado y administradores internos
+            </p>
+
+            <Link to={"/crear-cuenta"}>
+              <BotonInput value="Crear cuenta" />
+            </Link>
+          </div>
         </Card>
       </ContenedorDiv>
     </Layout>
