@@ -14,6 +14,7 @@ const Navegacion = styled.nav`
   display: grid;
   grid-template-columns: 70% 20%;
   border-bottom: 2px solid #000;
+  background-color: var(--blanco);
   div:last-child {
     display: flex;
     a:first-of-type {
@@ -38,6 +39,7 @@ const Imagen = styled.img`
 `;
 const ImagenLogout = styled.img`
   width: 2rem;
+  height: 1.9rem;
   margin: 1rem 2rem;
 `;
 const LogoImg = styled.img`

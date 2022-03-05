@@ -104,54 +104,58 @@ const Materias = () => {
     <Layout>
       <Contenedor>
         {/* <h1>Bienvenido(a): Sergio</h1> */}
-        <h1>Materias</h1>
         {token === null ? (
           navigate("/")
         ) : cargando ? (
           <Spinner />
         ) : errorMsg ? (
           <Error errorMsg={errorMsg} />
+        ) : materias.length === 0 ? (
+          <h1>Empieza agregando materias</h1>
         ) : (
-          <Tabla>
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Grado</th>
-                <th scope="col">Creditos</th>
-                <th scope="col">Opción</th>
-                <th scope="col">Clave</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Iteracion por cada admin */}
-              {materias.map((materia) => (
-                <tr key={materia._id}>
-                  <td scope="col">{materia.nombre}</td>
-                  <td scope="col">{materia.grado}</td>
-                  <td scope="col">{materia.creditos}</td>
-                  <td scope="col">{materia.opcion}</td>
-                  <td scope="col">{materia.clave}</td>
-                  <td scope="col">
-                    {/* Acciones */}
-                    <Acciones>
-                      <BotonInput
-                        value="Editar"
-                        type="submit"
-                        onClick={() => editarMateriaFn(materia)}
-                      />
-                      <BotonInputEliminar
-                        value="Eliminar"
-                        type="submit"
-                        onClick={() => eliminarMateriaFn(materia)}
-                      />
-                    </Acciones>
-                  </td>
-                  {/* Botons de acciones */}
+          <>
+            <h1>Materias</h1>
+            <Tabla>
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Grado</th>
+                  <th scope="col">Creditos</th>
+                  <th scope="col">Opción</th>
+                  <th scope="col">Clave</th>
+                  <th scope="col">Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </Tabla>
+              </thead>
+              <tbody>
+                {/* Iteracion por cada admin */}
+                {materias.map((materia) => (
+                  <tr key={materia._id}>
+                    <td scope="col">{materia.nombre}</td>
+                    <td scope="col">{materia.grado}</td>
+                    <td scope="col">{materia.creditos}</td>
+                    <td scope="col">{materia.opcion}</td>
+                    <td scope="col">{materia.clave}</td>
+                    <td scope="col">
+                      {/* Acciones */}
+                      <Acciones>
+                        <BotonInput
+                          value="Editar"
+                          type="submit"
+                          onClick={() => editarMateriaFn(materia)}
+                        />
+                        <BotonInputEliminar
+                          value="Eliminar"
+                          type="submit"
+                          onClick={() => eliminarMateriaFn(materia)}
+                        />
+                      </Acciones>
+                    </td>
+                    {/* Botons de acciones */}
+                  </tr>
+                ))}
+              </tbody>
+            </Tabla>
+          </>
         )}
       </Contenedor>
     </Layout>

@@ -103,53 +103,58 @@ const Panel = () => {
     <Layout>
       <Contenedor>
         {/* <h1>Bienvenido(a): Sergio</h1> */}
-        <h1>Administradores</h1>
+
         {token === null ? (
           navigate("/")
         ) : cargando ? (
           <Spinner />
         ) : errorMsg ? (
           <Error errorMsg={errorMsg} />
+        ) : admins.length === 0 ? (
+          <h1>Empieza agregando administradores</h1>
         ) : (
-          <Tabla>
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Paterno</th>
-                <th scope="col">Materno</th>
-                <th scope="col">Privilegios</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Iteracion por cada admin */}
-              {admins.map((admin) => (
-                <tr key={admin._id}>
-                  <td scope="col">{admin.nombre}</td>
-                  <td scope="col">{admin.paterno}</td>
-                  <td scope="col">{admin.materno}</td>
-                  <td scope="col">
-                    {admin.privilegios === "R"
-                      ? "Lectura"
-                      : "Lectura y Escritura"}
-                  </td>
-                  {/* Botons de acciones */}
-                  <td scope="col">
-                    <BotonInput
-                      value="Editar"
-                      type="submit"
-                      onClick={() => editarAdminFn(admin)}
-                    ></BotonInput>
-                    <BotonInputEliminar
-                      value="Eliminar"
-                      type="submit"
-                      onClick={() => eliminarAdminFn(admin._id)}
-                    ></BotonInputEliminar>
-                  </td>
+          <>
+            <h1>Administradores</h1>
+            <Tabla>
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Paterno</th>
+                  <th scope="col">Materno</th>
+                  <th scope="col">Privilegios</th>
+                  <th scope="col">Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </Tabla>
+              </thead>
+              <tbody>
+                {/* Iteracion por cada admin */}
+                {admins.map((admin) => (
+                  <tr key={admin._id}>
+                    <td scope="col">{admin.nombre}</td>
+                    <td scope="col">{admin.paterno}</td>
+                    <td scope="col">{admin.materno}</td>
+                    <td scope="col">
+                      {admin.privilegios === "R"
+                        ? "Lectura"
+                        : "Lectura y Escritura"}
+                    </td>
+                    {/* Botons de acciones */}
+                    <td scope="col">
+                      <BotonInput
+                        value="Editar"
+                        type="submit"
+                        onClick={() => editarAdminFn(admin)}
+                      ></BotonInput>
+                      <BotonInputEliminar
+                        value="Eliminar"
+                        type="submit"
+                        onClick={() => eliminarAdminFn(admin._id)}
+                      ></BotonInputEliminar>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Tabla>
+          </>
         )}
       </Contenedor>
     </Layout>

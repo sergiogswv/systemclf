@@ -28,32 +28,36 @@ const Alumnos = () => {
     <Layout>
       <Contenedor>
         {/* <h1>Bienvenido(a): Sergio</h1> */}
-        <h1>Alumnos</h1>
         {token === null ? (
           navigate("/")
         ) : cargando ? (
           <Spinner />
         ) : errorMsg ? (
           <Error errorMsg={errorMsg} />
+        ) : alumnos.length === 0 ? (
+          <h1>Empieza agregando alumnos</h1>
         ) : (
-          <Tabla>
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Paterno</th>
-                <th scope="col">Materno</th>
-                <th scope="col">Grado</th>
-                <th scope="col">Cuenta</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Iteracion por cada admin */}
-              {alumnos.map((alumno) => (
-                <Alumno alumno={alumno} key={alumno._id} />
-              ))}
-            </tbody>
-          </Tabla>
+          <>
+            <h1>Alumnos</h1>
+            <Tabla>
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Paterno</th>
+                  <th scope="col">Materno</th>
+                  <th scope="col">Grado</th>
+                  <th scope="col">Cuenta</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Iteracion por cada admin */}
+                {alumnos.map((alumno) => (
+                  <Alumno alumno={alumno} key={alumno._id} />
+                ))}
+              </tbody>
+            </Tabla>
+          </>
         )}
       </Contenedor>
     </Layout>

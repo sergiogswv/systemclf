@@ -95,13 +95,13 @@ const Login = () => {
       let token = localStorage.getItem("token");
       dispatch(verificarTokenAction(token));
       /* Acceder a autenticado */
-      if (token !== null || autenticado) {
+      if (token !== null && autenticado) {
         /* Si token no esta vacio */
         navigate("/panel");
       }
     };
     obtenerToken();
-  }, []);
+  }, [autenticado]);
 
   const [usuario, setUsuario] = useState({
     email: "",

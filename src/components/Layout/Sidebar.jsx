@@ -17,7 +17,8 @@ const ContenidoSidebar = styled.div`
     margin-left: 2.5rem;
   }
   @media (max-width: 768px) {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     font-size: 0.75rem;
     line-height: 1;
     height: 30%;
@@ -76,9 +77,9 @@ const Sidebar = () => {
           <p>Nuevo Alumno</p>
         </Enlace>
       </div>
-      <Enlace to="/calificaciones">
+      {/* <Enlace to="/calificaciones">
         <h2>Calificaciones</h2>
-      </Enlace>
+      </Enlace> */}
     </ContenidoSidebar>
   );
 };

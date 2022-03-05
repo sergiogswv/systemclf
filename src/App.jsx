@@ -74,9 +74,9 @@ function App() {
               element={<FormularioAlumno />}
             />
           </Route>
-          <Route>
+          {/* <Route>
             <Route path="/calificaciones" element={<Calificaciones />} />
-          </Route>
+          </Route> */}
           <Route>
             <Route path="/*" element={<Inicio />} />
           </Route>

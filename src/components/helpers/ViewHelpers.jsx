@@ -7,9 +7,9 @@ const ContenedorDiv = styled.div`
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.35);
   border-radius: 50px;
   width: 85%;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding-bottom: 2rem;
-  height: 100vh;
+  height: 100%;
   overflow-y: auto;
   h1 {
     color: var(--secondary);
@@ -17,6 +17,12 @@ const ContenedorDiv = styled.div`
     font-weight: 700;
     font-size: 2.5rem;
     text-align: center;
+  }
+  @media (max-width: 768px) {
+    height: 550px;
+    h1 {
+      font-size: 1.5rem;
+    }
   }
 `;
 

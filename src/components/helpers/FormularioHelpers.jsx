@@ -13,8 +13,14 @@ const ContenedorDiv = styled.div`
     color: var(--secondary);
     padding-top: 2rem;
     font-weight: 700;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     text-align: center;
+  }
+  @media (min-width: 768px) {
+    width: 60%;
+    h1 {
+      font-size: 2.5rem;
+    }
   }
 `;
 
@@ -56,7 +62,8 @@ const BotonInput = styled.input`
     color: var(--secondary);
   }
   @media (max-width: 768px) {
-    margin-left: 40%;
+    margin: 1rem 1rem;
+    width: 90%;
   }
 `;
 
