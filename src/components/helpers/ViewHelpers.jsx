@@ -10,7 +10,7 @@ const ContenedorDiv = styled.div`
   margin: 2rem auto;
   padding-bottom: 2rem;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   h1 {
     color: var(--secondary);
     padding-top: 2rem;
