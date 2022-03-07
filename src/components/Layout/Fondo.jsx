@@ -21,7 +21,8 @@ const Imagen = styled.img`
 const Fondo = () => {
   return (
     <FondoImagen>
-      <Imagen alt="Fondo" src={BgFondo} />
+      {/* 
+      <Imagen alt="Fondo" src={BgFondo} /> */}
     </FondoImagen>
   );
 };
