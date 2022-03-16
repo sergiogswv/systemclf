@@ -5,3 +5,8 @@ Hecho con Vite/React.
 (22/02/2022) 
 Dependencias: react-router-dom
               @emotion/styled
+              react-redux
+              redux
+              thunk
+              
+Branch = redux              
